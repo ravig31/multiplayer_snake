@@ -1,9 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
+import io from 'socket.io-client'
 
-export default (props) => {
+const socket = io.connect("http://localhost:3001");
+
+export const Snake = () => {
+    const [gameState, setGameState] = useState({})
+    socket.on('gameState', (state) => {
+        setGameState(state) 
+    });    
     return (
         <div>
-            {props.snakeDots.map((dot, i) => {
+            {gameState.snakeDots.map((dot, i) => {
                 const style = {
                     left: `${dot[0]}%`,
                     top: `${dot[1]}%`

@@ -1,20 +1,25 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import "./index.css"
-import Snake from './Snake';
+import {Snake} from './Snake';
 import Food from './Food';
 import io from 'socket.io-client'
 
 const socket = io.connect("http://localhost:3001");
+
 
 // socket.on('init', handleINIT)
 // socket.on('gamestate', handleGameState)
 
 
 class App extends Component {
+  
+  // const [gameState, setGameState] = useState({})
 
   render() {
     return (
       <div className='game-area'>
+        <Snake />
+        <Food />
       </div>
     )
   }
