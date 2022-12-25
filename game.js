@@ -1,17 +1,28 @@
+const { Socket } = require('socket.io')
 const { GRID_SZIE } = require('./constants')
 
 module.exports = {
     initGame,
     gameUpdate,
     createGameState,
+    randCoords,
 }
 
 function initGame(){
-    const state = createGameState()
+    const state = createGameState();
     return state
 }
 
-function randFoodCoords() {
+
+function createGameState() {
+    return{
+      players: [],
+      food: randCoords(),
+      gridsize: GRID_SZIE,
+      active: true,
+  }
+}
+function randCoords() {
     let min = 1, max = 98;
     let x = Math.floor((Math.random()*(max-min+1)+min)/2)*2
     let y = Math.floor((Math.random()*(max-min+1)+min)/2)*2
@@ -19,33 +30,38 @@ function randFoodCoords() {
   }
   
 
-function createGameState() {
-    return{
-      player: {
-        speed: 200,
-        direction: 'RIGHT',
-        snakeDots: [
-          [0,0],
-          [2,0]
-        ]
-      },
-      food: randFoodCoords(),
-      gridsize: GRID_SZIE,
-      active: true,
-  }
-}
 
 function gameUpdate(state) {
     if (!state) {
       return;
     }
+    
+    const playerOne = state.players[0];
+    const playerTwo = state.players[1];
 
-    const playerOne = state.player;
+    if (checkIfExitBorder(playerOne)){
+      return 2
+    }
 
-    checkIfExitBorder(playerOne)
+    if (checkIfCollapsed(playerOne)){
+      return 2
+    }
+
+    if (checkIfExitBorder(playerTwo)){
+      return 1
+    }
+
+    if (checkIfCollapsed(playerTwo)){
+      return 1
+    }
+
+
     checkIfEat(playerOne, state)
-    checkIfCollapsed(playerOne)
+    checkIfEat(playerTwo, state)
+
     moveSnake(playerOne)
+    moveSnake(playerTwo)
+
 
     return false
 }
@@ -79,7 +95,7 @@ function moveSnake(player){
 function checkIfExitBorder(player) {
   let head = player.snakeDots[player.snakeDots.length - 1];
   if (head[0] >= GRID_SZIE || head[1] >= GRID_SZIE || head[0] < 0 || head[1] < 0){
-      // return player number
+      return true
     } 
   }
 
@@ -87,7 +103,7 @@ function checkIfEat(player, state) {
     let head = player.snakeDots[player.snakeDots.length - 1];
     let food = state.food;
     if (head[0] == food[0] && head[1] == food[1]) {
-      player.food = randFoodCoords()   // randomfood()
+      state.food = randCoords()   // randomfood()
 
       // growsnake
       let newSnake = [...player.snakeDots];
@@ -107,7 +123,7 @@ function checkIfCollapsed(player) {
   snake.pop();
   snake.forEach(dot => {
     if (head[0] == dot[0] && head[1] == dot[1]) {
-      //return player number
+      return true
     }
   })
 }
@@ -116,35 +132,6 @@ function checkIfCollapsed(player) {
 
 
   
-// componentDidMount() {
-//   setInterval(this.moveSnake, this.state.speed);
-//   document.onkeydown = this.onKeyDown;
-// }
-
-
-// componentDidUpdate() {
-//   this.checkIfExitBorder();
-//   this.checkIfEat();
-//   this.checkIfCollapsed();
-// }
-
-// onKeyDown = (e) => {
-//   e = e || window.event;
-//   switch (e.key){
-//     case "w":
-//       this.setState({direction: "up"});
-//       break;
-//     case "s":
-//       this.setState({direction: "down"});
-//       break;
-//     case "d":
-//       this.setState({direction: "left"});
-//       break;
-//     case "a":
-//       this.setState({direction: "right"});
-//       break;
-//   }
-// }
 
 
 
