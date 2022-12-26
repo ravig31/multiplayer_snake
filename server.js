@@ -10,7 +10,7 @@ const { FRAME_RATE } = require('./constants');
 const { makeid } = require('./id');
 
 
-app.use(cors());
+app.use(cors({ origin: true }));
 // Create HTTP server and Socket.io server
 const server = http.createServer(app);
 const io = new Server(server, {
