@@ -10,15 +10,12 @@ const { FRAME_RATE } = require('./constants');
 const { makeid } = require('./id');
 
 
-app.use(cors({
-  origin: "https://multiplayer-snake-ravig31.netlify.app",
-}));
-
+app.use(cors());
 // Create HTTP server and Socket.io server
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://multiplayer-snake-ravig31.netlify.app",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
