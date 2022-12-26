@@ -15,7 +15,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://multiplayer-snake-ravig31.netlify.app",
     methods: ["GET", "POST"],
   },
 });

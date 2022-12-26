@@ -4,7 +4,7 @@ import Snake from './Snake';
 import Food from './Food';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+const socket = io('https://multiplayer-snake.onrender.com');
 
 
 
