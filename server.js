@@ -17,7 +17,7 @@ const io = new Server(server, {
   cors: {
     origin: "multiplayer-snake-ravig31.netlify.app",
     methods: ["GET", "POST"],
-    allowedHeaders: ["Access-Control-Allow-Origin"],
+    allowedHeaders: ["*"],
     credentials: true
   }
 });
