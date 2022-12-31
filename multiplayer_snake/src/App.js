@@ -6,9 +6,7 @@ import io from 'socket.io-client';
 
 const socket = io('https://multiplayer-snake.onrender.com', {
   withCredentials: true,
-  extraHeaders: {
-    "Access-Control-Allow-Origin": "true"
-  }
+  transports: ['websocket', 'polling', 'flashsocket']
 });
 
 
