@@ -11,9 +11,9 @@ const { makeid } = require('./id');
 // Create HTTP server and Socket.io server
 const server = http.createServer(app);
 const io = new Server(server, {
-  origin: "https://multiplayer-snake-ravig31.netlify.app",
+  origin: "*",
   methods: ["GET", "POST"],
-  allowedHeaders: ["*"],
+  allowedHeaders: ["Access-Control-Allow-Origin"],
   credentials: true
 });
 
