@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const http = require("http");
-const cors = require("cors");
 const { Server } = require("socket.io");
 
 // Import game logic and constants
@@ -9,17 +8,13 @@ const { gameUpdate, initGame, randCoords }  = require('./game');
 const { FRAME_RATE } = require('./constants');
 const { makeid } = require('./id');
 
-
-app.use(cors());
 // Create HTTP server and Socket.io server
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: {
-    origins: "*:*",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["*"],
-    credentials: true
-  }
+  origins: "*:*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["*"],
+  credentials: true
 });
 
 const globalState = {};
