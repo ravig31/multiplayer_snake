@@ -28,7 +28,9 @@ const clientRooms = {};
 
 // Listen for incoming connections from clients
 io.on('connection', client => {
-  console.log(`User with socket id ${client.id} has connected.`);
+  client.on('message', message => {
+    console.log(`Received message from server: ${message}`);
+  });
 
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
