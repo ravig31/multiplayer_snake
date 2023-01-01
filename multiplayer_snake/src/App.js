@@ -4,9 +4,9 @@ import Snake from './Snake';
 import Food from './Food';
 import io from 'socket.io-client';
 
-const socket = io('https://multiplayer-snake.onrender.com', {
+const socket = io('wss://multiplayer-snake.onrender.com', {
   transports: ['websocket'],
-  origin: 'https://multiplayer-snake.onrender.com',
+  origin: 'wss://multiplayer-snake.onrender.com',
   credentials: true
 });
 
