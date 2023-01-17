@@ -5,12 +5,10 @@ import Food from './Food';
 import io from 'socket.io-client';
 
 const socket = io('https://multiplayer-snake.onrender.com', {
-  withCredentials: true,
-  extraHeaders: {
-    "Access-Control-Allow-Origin": "*"
-  }
+  transports: ['websocket'],
+  origin: 'https://multiplayer-snake.onrender.com',
+  credentials: true
 });
-
 
 
 socket.emit('message', 'Hello server!');
