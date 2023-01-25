@@ -12,7 +12,7 @@ const { makeid } = require('./id');
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://multiplayer-snake-ravig31.netlify.app",
+    origin: "http://localhost:3000/",
     methods: ["GET", "POST"],
     allowedHeaders: ["Access-Control-Allow-Origin: *"],
     credentials: true
@@ -25,6 +25,8 @@ const clientRooms = {};
 
 // Listen for incoming connections from clients
 io.on('connection', client => {
+  client.emit("test", "testing1234")
+
   client.on('message', message => {
     console.log(`Received message from server: ${message}`);
   });
@@ -119,11 +121,17 @@ io.on('connection', client => {
       player.direction = newDirection
     }
     })
-  });
-  });
 
+    client.on("message", message =>{
+      console.log(message)
+    })
+
+  });
+  });
+  
   
 server.listen(3001, () => {
-  process.env.PORT || 3000
   console.log("SERVER IS RUNNING");
 });
+
+

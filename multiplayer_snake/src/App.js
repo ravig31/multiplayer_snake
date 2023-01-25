@@ -4,14 +4,7 @@ import Snake from './Snake';
 import Food from './Food';
 import io from 'socket.io-client';
 
-const socket = io('https://multiplayer-snake.onrender.com', {
-  origin: 'https://multiplayer-snake.onrender.com',
-  credentials: true
-});
-
-
-socket.emit('message', 'Hello server!');
-
+const socket = io('https://localhost:3001')
 
 
 const initialScreen = document.getElementById('initial-screen')
