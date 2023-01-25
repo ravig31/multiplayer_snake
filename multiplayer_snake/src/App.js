@@ -4,7 +4,11 @@ import Snake from './Snake';
 import Food from './Food';
 import io from 'socket.io-client';
 
-const socket = io('https://localhost:3001')
+const socket = io('https://multiplayer-snake.onrender.com', {
+  origin: 'https://multiplayer-snake.onrender.com',
+  credentials: true
+});
+
 
 
 const initialScreen = document.getElementById('initial-screen')
@@ -13,7 +17,7 @@ function App() {
   const [currentState, setCurrentState] = useState();
   const [currentDirection, setCurrentDirection] = useState(null);
   const [gameCode, setGameCode] = useState('');
-  const [gameCodeDisplay, setGameCodeDisplay] = useState('___')
+  const [gameCodeDisplay, setGameCodeDisplay] = useState('')
 
   socket.on('gameInit', handleInit);
   socket.on('unknownGame', handleUnknownGame)
@@ -132,8 +136,12 @@ function App() {
         </div>
       ) : (
         <div id="initial-screen">
-          <h3>
-              your room id: <span id="gameCodeDisplay">{gameCodeDisplay}</span>
+          <div class="title" data-splitting="lines">
+            2-PLAYER
+            SNAKE
+          </div>
+          <h3 class="gamecode">
+              CODE: <span id="gameCodeDisplay">{gameCodeDisplay}</span>
           </h3>
           <button onClick={startNewGame}>New Game</button>
           <input

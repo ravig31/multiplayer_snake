@@ -1,4 +1,5 @@
 import React from "react";
+const pineapple = require('./assets/apple.png')
 
 export default (props) => {
 
@@ -7,6 +8,6 @@ export default (props) => {
         top: `${props.dot[1]}%`
     }
     return (
-        <div className="food" style={style}></div>
+        <img src={pineapple} style={style} className="food" alt="food image" />
     )
 }

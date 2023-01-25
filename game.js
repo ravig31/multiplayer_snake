@@ -94,7 +94,7 @@ function moveSnake(player){
 
 function checkIfExitBorder(player) {
   let head = player.snakeDots[player.snakeDots.length - 1];
-  if (head[0] >= GRID_SZIE || head[1] >= GRID_SZIE || head[0] < 0 || head[1] < 0){
+  if (head[0] >= GRID_SZIE-1 || head[1] >= GRID_SZIE-1 || head[0] < 1 || head[1] < 1){
       return true
     } 
   }
