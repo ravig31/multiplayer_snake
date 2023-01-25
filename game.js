@@ -1,5 +1,5 @@
 const { Socket } = require('socket.io')
-const { GRID_SZIE } = require('./constants')
+const { GRID_SIZE } = require('./constants')
 
 module.exports = {
     initGame,
@@ -18,7 +18,7 @@ function createGameState() {
     return{
       players: [],
       food: randCoords(),
-      gridsize: GRID_SZIE,
+      gridsize: GRID_SIZE,
       active: true,
   }
 }
@@ -94,7 +94,7 @@ function moveSnake(player){
 
 function checkIfExitBorder(player) {
   let head = player.snakeDots[player.snakeDots.length - 1];
-  if (head[0] >= GRID_SZIE-1 || head[1] >= GRID_SZIE-1 || head[0] < 1 || head[1] < 1){
+  if (head[0] >= GRID_SIZE-1 || head[1] >= GRID_SIZE-1 || head[0] < -1 || head[1] < -1){
       return true
     } 
   }
