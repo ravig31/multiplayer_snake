@@ -94,7 +94,7 @@ function moveSnake(player){
 
 function checkIfExitBorder(player) {
   let head = player.snakeDots[player.snakeDots.length - 1];
-  if (head[0] >= GRID_SIZE-1 || head[1] >= GRID_SIZE-1 || head[0] < 2 || head[1] < 2){
+  if (head[0] >= GRID_SIZE-2 || head[1] >= GRID_SIZE-2 || head[0] < 2 || head[1] < 2){
       return true
     } 
   }
@@ -103,6 +103,7 @@ function checkIfEat(player, state) {
     let head = player.snakeDots[player.snakeDots.length - 1];
     let food = state.food;
     if (head[0] == food[0] && head[1] == food[1]) {
+      player.score += 1
       state.food = randCoords()   // randomfood()
 
       // growsnake

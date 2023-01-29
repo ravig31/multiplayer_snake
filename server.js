@@ -12,10 +12,8 @@ const { makeid } = require('./id');
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://multiplayer-snake-ravig31.netlify.app",
+    origin: "*",
     methods: ["GET", "POST"],
-    allowedHeaders: ["Access-Control-Allow-Origin: *"],
-    credentials: true
   }
 });
 
@@ -47,6 +45,7 @@ io.on('connection', client => {
   function initSnake(roomName) {
     globalState[roomName].players.push({
         id: client.id,
+        score: 0,
         speed: 200,
         direction: null,
         snakeDots: [
@@ -60,14 +59,20 @@ io.on('connection', client => {
   function handleJoinGame(roomName) {
     const room = io.sockets.adapter.rooms.get(roomName);
 
+    let numClients
+    if (room) {
+      numClients = room.size;
+    } else {
+      numClients = 0;
+    }
 
-    let numClients = room.size;
+    console.log(numClients)
 
     if (numClients === 0) {
-      client.emit('unknownCode');
+      client.emit('unknownGame');
       return;
     } else if (numClients > 1) {
-      client.emit('tooManyPlayers');
+      client.emit('playersMaxed');
       return;
     }
 
@@ -78,10 +83,7 @@ io.on('connection', client => {
     client.emit('gameInit', 2);
 
     initSnake(roomName)
-    console.log(globalState[roomName])
     console.log(io.sockets.adapter.rooms)
-
-    io.to(roomName).emit('test', 'string')
     startGameInterval(roomName);
   }
   // Start game interval to update game state and send it to clients
@@ -121,7 +123,6 @@ io.on('connection', client => {
     })
   });
   });
-
   
 server.listen(3001, () => {
   process.env.PORT || 3000

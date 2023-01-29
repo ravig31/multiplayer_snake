@@ -2,6 +2,9 @@
 @import url('https://fonts.cdnfonts.com/css/arcade-classic');
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+html{
+    font-family: 'Press Start 2P', cursive;;
+}
 .title {
     font-family: 'ArcadeClassic', sans-serif;
     font-size: 200px;
@@ -23,6 +26,7 @@
     background-image: url('./assets/grid.jpg');
 }
 
+
 .snake-dot{
     position: absolute;
     width: 2%;
@@ -31,8 +35,9 @@
     }
 
 .food{
+    
+    display: block;
     position: absolute;
-    margin: 0 auto;
     width: 5%;
     height: 5%;
     background-image: none;
@@ -40,7 +45,6 @@
 }
 
 #initial-screen {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -108,3 +112,81 @@ input::placeholder {
     color: #b3b3b3;
 }
 
+.game-over{
+    margin: 0 auto;
+    margin-top: 400px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 2%;
+    width: 400px;
+    height: 600px;
+    background-color: skyblue;
+    box-shadow: 2px 2px 4px #000000;
+    z-index: 2;
+}
+
+.game-over-heading{
+    color: #fff;
+    margin-top: 60px;
+    margin-bottom: 10px;
+    font-size: 80px;
+    text-align: center;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+}
+
+.over{
+    color: darkred;
+}
+
+.game-over-subh{
+    color: #fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.player-scores{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.score{
+    padding: 0 20px;
+}
+
+.golden{
+    color: gold ;
+    text-shadow: 2px 2px #000;
+}
+
+.play-again{
+    margin-top: 40px;
+    text-shadow: 4px 4px white;
+}
+
+.main-menu-wrapper{
+    margin-top: 60px;
+
+}
+
+.main-menu-btn{
+    margin-top: 90px;
+    text-shadow: 4px 4px white;
+    position: relative;
+    font-family: 'Press Start 2P', cursive;
+    background-color: skyblue;
+    color: black;
+    font-size: 24px;
+    padding: 10px 14px;
+    border-radius: 5px;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.main-menu-btn::before{
+    border-left: 8px solid gold;
+    filter: drop-shadow(2px 2px 2px black);
+
+}
