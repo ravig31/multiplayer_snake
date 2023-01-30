@@ -92,6 +92,7 @@ function moveSnake(player){
   player.snakeDots = dots
 }
 
+
 function checkIfExitBorder(player) {
   let head = player.snakeDots[player.snakeDots.length - 1];
   if (head[0] >= GRID_SIZE-2 || head[1] >= GRID_SIZE-2 || head[0] < 2 || head[1] < 2){
@@ -122,11 +123,12 @@ function checkIfCollapsed(player) {
   let snake = [...player.snakeDots];
   let head = snake[snake.length - 1];
   snake.pop();
-  snake.forEach(dot => {
-    if (head[0] == dot[0] && head[1] == dot[1]) {
-      return true
+  for (let dot of snake) {
+    if ((head[0] == dot[0] && head[1] == dot[1]) && snake.length >= 3) {
+      return true;
     }
-  })
+  }
+  return false;
 }
 
 

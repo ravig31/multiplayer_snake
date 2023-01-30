@@ -9,9 +9,13 @@ export default (props) => {
             top: `${dot[1]}%`
           }
           return (
-            <div className="snake-dot" key={i} style={style}></div>
-          )
+            <div
+              className={i === props.snakeDots.length - 1 ? "snake-head" : "snake-dot"}
+              key={i}
+              style={style}
+            ></div>
+          );
         })}
       </div>
-    )
-  }
+    );
+  };

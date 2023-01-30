@@ -11,12 +11,13 @@ const socket = io('http://localhost:3001/', {
 
 function App() {
   const [initScreenDisplay, setinitScreenDisplay] = useState('flex');
-  const [gameOverDisplay, setgameOverDisplay] = useState('none');
   const [gameAreaDisplay, setgameAreaDisplay] = useState('flex');
   const [currentState, setCurrentState] = useState();
   const [currentDirection, setCurrentDirection] = useState(null);
   const [gameCode, setGameCode] = useState('');
   const [gameCodeDisplay, setGameCodeDisplay] = useState('');
+  const [gameOver, setGameOver] = useState(false)
+  const [blur, setBlur] = useState(false);
 
   socket.on('gameInit', handleInit);
   socket.on('unknownGame', handleUnknownGame)
@@ -25,19 +26,21 @@ function App() {
 
   let playerNumber;
   let gameActive = false;
-  
+
   function startNewGame(){
     socket.emit('newGame');
   }
   
   function JoinGame(){
-
     socket.emit('joinGame', gameCode);
     init()
   }
   function init() {
     //initialise game board 
-    setinitScreenDisplay('none') 
+    setinitScreenDisplay('none')
+    setGameOver(false)
+    setgameAreaDisplay('flex')
+    setBlur(false)
     gameActive = true;
   }
 
@@ -48,7 +51,6 @@ function App() {
 
 
   function handleUnknownGame(){
-    console.log('first')
     gameReset()
     alert("Unknown game code")
   }
@@ -62,15 +64,14 @@ function App() {
   function handleInit(number) {
     playerNumber = number;
   }
-  
 
   function gameReset(){
     playerNumber = null;
     setGameCode('')
     setGameCodeDisplay('')
     setinitScreenDisplay('flex')
-    setgameOverDisplay('none')
     setgameAreaDisplay('flex')
+    setGameOver(false)
     setCurrentState(null)
 
   }
@@ -114,20 +115,10 @@ function App() {
    
   useEffect(() => {
     socket.on('gameOver', data => {
-
       data = JSON.parse(data);
-
-      if (data.winner === playerNumber) {
-        console.log('over')
-        setgameOverDisplay("flex")
-        setgameAreaDisplay("none")
-        // alert('Winner, Winner, Chicken Dinner!');
-      } else {
-        console.log('over')
-        setgameOverDisplay("flex")
-        setgameAreaDisplay("none")
-        // alert('Loser, You Suck!');
-      }
+      setgameAreaDisplay('flex')
+      setBlur(true)
+      setGameOver(true)
 
     });
   }, []);
@@ -135,7 +126,7 @@ function App() {
   return (
     <div>
       {currentState ? (
-        <div id="game-area" style={{display: gameAreaDisplay}}>
+    <div id="game-area" style={{ display: gameAreaDisplay, filter: blur ? 'blur(4px)' : 'none' }}>
           <Snake snakeDots={currentState.players[0].snakeDots} />
           <Snake snakeDots={currentState.players[1].snakeDots} />
           <Food dot={currentState.food} />
@@ -160,7 +151,8 @@ function App() {
           <button onClick={JoinGame}>Join Game</button>
         </div>
       )}
-      <div className="game-over" style={{display: gameOverDisplay}}>
+      {gameOver ? (
+      <div className="game-over">
         <h1 className="game-over-heading">
           GAME <span className="over">OVER</span>
         </h1>
@@ -174,9 +166,9 @@ function App() {
           <button className="main-menu-btn" onClick={gameReset}>MAIN MENU</button>
         </div>
       </div>
+      ) : null}
     </div>
 );
-
 }
 
 export default App;

@@ -111,17 +111,20 @@ io.on('connection', client => {
   }
 
   // Listen for change direction events from client
+  let oppositeDir = {'up': 'down', 'down' : 'up', 'left' : 'right',  'right' : 'left'}
   client.on('changeDirection', newDirection => {
     // Update game state with new direction for the player's snake
     const roomName = clientRooms[client.id];
     if (!roomName){
       return;
     }
-     
+    
     if (globalState[roomName]){
       globalState[roomName].players.forEach(player => {
       if (player.id === client.id) {
-        player.direction = newDirection
+        if (newDirection != oppositeDir[player.direction]){
+          player.direction = newDirection
+        }
       }
       })
     }

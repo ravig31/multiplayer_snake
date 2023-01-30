@@ -15,23 +15,34 @@ html{
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
-
 #game-area {
-    position: relative;
-    margin: auto;
-    margin-top: 400px;
+    position: absolute;
+    left: 50%;
+    margin-left: -300px;
+    top: 50%;
+    margin-top: -300px;
     width: 600px;
     height: 600px;
     border: 2px solid black;
-    background-image: url('./assets/grid.jpg');
+    background-color: lightgray;
+    background-size: 2% 2%;
+    background-image: linear-gradient(to right, gray 1px, transparent 1px), linear-gradient(to bottom, gray 1px, transparent 1px);
+    z-index: 0;
+    transform: scale(1.5);
 }
 
+.snake-head {
+    background-color: rgb(255, 179, 0);
+    width: 2%;
+    height: 2%;
+    position: absolute;
+  }
 
 .snake-dot{
     position: absolute;
     width: 2%;
     height: 2%;
-    background-color: #000;
+    background-color: rgb(104, 67, 3);
     }
 
 .food{
@@ -107,14 +118,18 @@ input::placeholder {
 }
 
 .game-over{
-    margin: 0 auto;
-    margin-top: 400px;
-    display: none;
+    position: absolute;
+    left: 50%;
+    margin-left: -190px;
+    top: 50%;
+    margin-top: -250px;
+    display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 2%;
-    width: 400px;
-    height: 600px;
+    width: 380px;
+    height: 500px;
+    transform: scale(0.85);
     background-color: skyblue;
     box-shadow: 2px 2px 4px #000000;
     z-index: 2;
@@ -146,12 +161,14 @@ input::placeholder {
 }
 
 .score{
+    font-size: 24px;
     padding: 0 20px;
 }
 
 .golden{
     color: gold ;
     text-shadow: 2px 2px #000;
+    font-size: 24px;
 }
 
 .play-again{
@@ -160,7 +177,7 @@ input::placeholder {
 }
 
 .main-menu-wrapper{
-    margin-top: 60px;
+    margin-top: 40px;
 
 }
 
