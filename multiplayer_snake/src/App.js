@@ -69,6 +69,8 @@ function App() {
     setGameCode('')
     setGameCodeDisplay('')
     setinitScreenDisplay('flex')
+    setgameOverDisplay('none')
+    setgameAreaDisplay('flex')
     setCurrentState(null)
 
   }

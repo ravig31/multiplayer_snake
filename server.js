@@ -56,6 +56,8 @@ io.on('connection', client => {
       })
     }
 
+
+
   function handleJoinGame(roomName) {
     const room = io.sockets.adapter.rooms.get(roomName);
 
@@ -65,8 +67,6 @@ io.on('connection', client => {
     } else {
       numClients = 0;
     }
-
-    console.log(numClients)
 
     if (numClients === 0) {
       client.emit('unknownGame');
@@ -96,6 +96,7 @@ io.on('connection', client => {
       } else {
         emitGameOver(roomName, winner);
         globalState[roomName] = null;
+        io.in(roomName).socketsLeave(roomName);
         clearInterval(intervalID)
       }
     }, 1000 / FRAME_RATE);
@@ -116,11 +117,14 @@ io.on('connection', client => {
     if (!roomName){
       return;
     }
-    globalState[roomName].players.forEach(player => {
-    if (player.id === client.id) {
-      player.direction = newDirection
+     
+    if (globalState[roomName]){
+      globalState[roomName].players.forEach(player => {
+      if (player.id === client.id) {
+        player.direction = newDirection
+      }
+      })
     }
-    })
   });
   });
   
