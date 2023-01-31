@@ -4,10 +4,16 @@ import Snake from './Snake';
 import Food from './Food';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001/', {
-  origin: 'http://localhost:3001/',
+const socket = io('https://multiplayer-snake.onrender.com', {
+  origin: 'https://multiplayer-snake.onrender.com',
   credentials: true
 });
+
+// const socket = io('http://localhost:3001/', {
+//   origin: 'http://localhost:3001/',
+//   credentials: true
+// });
+
 
 function App() {
   const [initScreenDisplay, setinitScreenDisplay] = useState('flex');
