@@ -12,12 +12,18 @@ const socket = io('http://localhost:3001/', {
 function App() {
   const [initScreenDisplay, setinitScreenDisplay] = useState('flex');
   const [gameAreaDisplay, setgameAreaDisplay] = useState('flex');
+  const [codeDisplay, setcodeDisplay] = useState('none');
+  const [inputDisplay, setinputDisplay] = useState('none');
   const [currentState, setCurrentState] = useState();
   const [currentDirection, setCurrentDirection] = useState(null);
   const [gameCode, setGameCode] = useState('');
   const [gameCodeDisplay, setGameCodeDisplay] = useState('');
   const [gameOver, setGameOver] = useState(false)
   const [blur, setBlur] = useState(false);
+  const [incorrectCode, setIncorrectCode] = useState(false)
+  const clipboard = require('./assets/clipboard-icon.png')
+
+
 
   socket.on('gameInit', handleInit);
   socket.on('unknownGame', handleUnknownGame)
@@ -29,12 +35,24 @@ function App() {
 
   function startNewGame(){
     socket.emit('newGame');
+    setinitScreenDisplay('none')
+    setinputDisplay('none')
+    setcodeDisplay('flex')
   }
   
-  function JoinGame(){
+  function EnterGame(){
     socket.emit('joinGame', gameCode);
     init()
   }
+
+  function JoinGame(){
+    setinitScreenDisplay('none')
+    setcodeDisplay('none')
+    setinputDisplay('flex')
+
+  }
+
+  
   function init() {
     //initialise game board 
     setinitScreenDisplay('none')
@@ -51,14 +69,12 @@ function App() {
 
 
   function handleUnknownGame(){
-    gameReset()
-    alert("Unknown game code")
+    setIncorrectCode(true)
   }
   
 
   function handlePlayersMaxed(){
     gameReset()
-    alert("This game is already in progress")
   }
 
   function handleInit(number) {
@@ -71,6 +87,8 @@ function App() {
     setGameCodeDisplay('')
     setinitScreenDisplay('flex')
     setgameAreaDisplay('flex')
+    setcodeDisplay('none')
+    setinputDisplay('none')
     setGameOver(false)
     setCurrentState(null)
 
@@ -125,6 +143,25 @@ function App() {
 
   return (
     <div>
+      <div className='new-game' style={{display: codeDisplay}}>
+        <h3 className="gamecode">
+            CODE: <span id="gameCodeDisplay">{gameCodeDisplay}</span>
+        </h3>
+        <button className='copy-button' onClick={() => {navigator.clipboard.writeText(gameCodeDisplay)}}>
+          <img className='copy-button-img' src={clipboard} alt="Logo"/>
+        </button>
+      </div>
+      <div className='join-game' style={{display : inputDisplay}}>
+        <input
+              id="gameCodeInput"
+              type="text"
+              placeholder="Enter game code"
+              value={gameCode}
+              onChange={e => setGameCode(e.target.value)}
+              className={`gamecode-input ${incorrectCode ? "shake" : ""} ${incorrectCode ? "red" : ""}`}
+            />
+          <button className='btn' onClick={EnterGame}>ENTER</button>
+        </div>
       {currentState ? (
         <div className='game-container'>
           <div className='current-scores' style={{ display: gameAreaDisplay, filter: blur ? 'blur(4px)' : 'none' }}>
@@ -143,19 +180,10 @@ function App() {
             2-PLAYER
             SNAKE
           </div>
-          <h3 className="gamecode">
-              CODE: <span id="gameCodeDisplay">{gameCodeDisplay}</span>
-          </h3>
-          <button onClick={startNewGame}>New Game</button>
-          <input
-            id="gameCodeInput"
-            type="text"
-            placeholder="Enter game code"
-            value={gameCode}
-            onChange={e => setGameCode(e.target.value)}
-          />
-          <button onClick={JoinGame}>Join Game</button>
+          <button className='btn' onClick={startNewGame}>New Game</button>
+          <button className='btn' onClick={JoinGame}>Join Game</button>
         </div>
+        
       )}
       {gameOver ? (
       <div className="game-over">
