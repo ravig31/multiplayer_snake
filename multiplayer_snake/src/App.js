@@ -126,10 +126,16 @@ function App() {
   return (
     <div>
       {currentState ? (
-    <div id="game-area" style={{ display: gameAreaDisplay, filter: blur ? 'blur(4px)' : 'none' }}>
-          <Snake snakeDots={currentState.players[0].snakeDots} />
-          <Snake snakeDots={currentState.players[1].snakeDots} />
-          <Food dot={currentState.food} />
+        <div className='game-container'>
+          <div className='current-scores' style={{ display: gameAreaDisplay, filter: blur ? 'blur(4px)' : 'none' }}>
+            <h2 className='current-score'>P1:{currentState.players[0].score}</h2>
+            <h2 className='current-score'>P2:{currentState.players[1].score}</h2>
+          </div>
+          <div id="game-area" style={{ display: gameAreaDisplay, filter: blur ? 'blur(4px)' : 'none' }}>
+            <Snake snakeDots={currentState.players[0].snakeDots} />
+            <Snake snakeDots={currentState.players[1].snakeDots} />
+            <Food dot={currentState.food} />
+          </div>
         </div>
       ) : (
         <div id="initial-screen" style={{display: initScreenDisplay}}>

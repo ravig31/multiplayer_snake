@@ -39,21 +39,16 @@ function gameUpdate(state) {
     const playerOne = state.players[0];
     const playerTwo = state.players[1];
 
-    if (checkIfExitBorder(playerOne)){
+
+    if (checkIfExitBorder(playerOne) || checkIfCollapsed(playerOne) || playerTwo.score == 20){
       return 2
     }
 
-    if (checkIfCollapsed(playerOne)){
-      return 2
-    }
-
-    if (checkIfExitBorder(playerTwo)){
+    if (checkIfExitBorder(playerTwo) || checkIfCollapsed(playerTwo) || playerOne.score == 20){
       return 1
     }
 
-    if (checkIfCollapsed(playerTwo)){
-      return 1
-    }
+
 
 
     checkIfEat(playerOne, state)
