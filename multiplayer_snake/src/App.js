@@ -45,6 +45,10 @@ function App() {
     setinputDisplay('none')
     setcodeDisplay('flex')
   }
+
+  function newCode(){
+    socket.emit('newGame')
+  }
   
   function EnterGame(){
     socket.emit('joinGame', gameCode);
@@ -156,6 +160,7 @@ function App() {
         <button className='copy-button' onClick={() => {navigator.clipboard.writeText(gameCodeDisplay)}}>
           <img className='copy-button-img' src={clipboard} alt="Logo"/>
         </button>
+        <button onClick={newCode} className="btn new-code">NEW CODE</button>
       </div>
       <div className='join-game' style={{display : inputDisplay}}>
         <input
