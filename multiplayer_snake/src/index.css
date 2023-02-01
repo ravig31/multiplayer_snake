@@ -6,6 +6,11 @@ html{
     font-family: 'Press Start 2P', cursive;;
 }
 
+.app-container{
+    margin: 0 auto;
+
+}
+
 .btn {
     position: relative;
     font-family: 'Press Start 2P', cursive;
@@ -61,9 +66,9 @@ html{
     border: 2px solid black;
     background-color: lightgray;
     background-size: 2% 2%;
-    background-image: linear-gradient(to right, gray 1px, transparent 1px), linear-gradient(to bottom, gray 1px, transparent 1px);
+    background-image: linear-gradient(to right, gray 0.8px, transparent 0.8px), linear-gradient(to bottom, gray 0.8px, transparent 0.8px);
     z-index: 0;
-    transform: scale(1.5);
+    transform: scale(1.3);
 }
 
 .current-scores{
@@ -71,7 +76,7 @@ html{
     position: relative;
     left: 50%;
     margin-top: 120px;
-    margin-left: -444px;
+    margin-left: -380px;
     
 }
 
@@ -90,26 +95,34 @@ html{
     position: absolute;
     width: 2%;
     height: 2%;
-    background-color: rgb(104, 67, 3);
+ 
     }
 
-    @keyframes jump {
-        0% {
-        transform: translateY(0);
-        }
-        50% {
-        transform: translateY(-2px);
-        }
-        100% {
-        transform: translateY(0);
-        }
-        }
-        
-        .food {
-        display: block;
-        box-shadow: 1px 2px 2px rgb(106, 102, 102);
-        animation: jump 1s ease-in-out infinite;
-        }
+.p0dot{
+    background-color: rgb(104, 67, 3);
+}
+.p1dot{
+    background-color: darkgreen;
+}
+
+.food {
+    display: block;
+    box-shadow: 1px 2px 2px rgb(106, 102, 102);
+    animation: jump 1s ease-in-out infinite;
+}
+
+@keyframes jump {
+    0% {
+    transform: translateY(0);
+    }
+    50% {
+    transform: translateY(-2px);
+    }
+    100% {
+    transform: translateY(0);
+    }
+    }
+
 
 #initial-screen {
     flex-direction: column;
@@ -211,8 +224,6 @@ html{
     font-family: 'Press Start 2P', cursive;
     font-size: 20px;
 }
-
-
 
 
 input {

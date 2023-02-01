@@ -10,7 +10,7 @@ export default (props) => {
           }
           return (
             <div
-              className={i === props.snakeDots.length - 1 ? "snake-head" : "snake-dot"}
+              className={i === props.snakeDots.length - 1 ? `snake-head` : `snake-dot p${props.playerIndex}dot`}
               key={i}
               style={style}
             ></div>
@@ -19,3 +19,4 @@ export default (props) => {
       </div>
     );
   };
+

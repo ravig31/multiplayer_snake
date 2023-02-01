@@ -47,9 +47,18 @@ function gameUpdate(state) {
     if (checkIfExitBorder(playerTwo) || checkIfCollapsed(playerTwo) || playerOne.score == 20){
       return 1
     }
+    
+    if (checkIfCollision(playerTwo, playerOne)){
+      return 2
+    }
+
+    if (checkIfCollision(playerOne, playerTwo)){
+      return 1
+    }
 
 
 
+    checkIfCollision(playerOne, playerTwo)
 
     checkIfEat(playerOne, state)
     checkIfEat(playerTwo, state)
@@ -112,6 +121,20 @@ function checkIfEat(player, state) {
         player.speed -= 10
       }
     }
+}
+
+function checkIfCollision(player1, player2){
+  let snake1 = [...player1.snakeDots];
+  let snake2 = [...player2.snakeDots];
+  let head2 = snake2[snake2.length - 1];
+
+  snake1.pop();
+  for (let dot of snake1) {
+    if ((head2[0] == dot[0] && head2[1] == dot[1])) {
+      return true;
+    }
+  }
+  
 }
 
 function checkIfCollapsed(player) {

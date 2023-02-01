@@ -4,15 +4,15 @@ import Snake from './Snake';
 import Food from './Food';
 import io from 'socket.io-client';
 
-const socket = io('https://multiplayer-snake.onrender.com', {
-  origin: 'https://multiplayer-snake.onrender.com',
-  credentials: true
-});
-
-// const socket = io('http://localhost:3001/', {
-//   origin: 'http://localhost:3001/',
+// const socket = io('https://multiplayer-snake.onrender.com', {
+//   origin: 'https://multiplayer-snake.onrender.com',
 //   credentials: true
 // });
+
+const socket = io('http://localhost:3001/', {
+  origin: 'http://localhost:3001/',
+  credentials: true
+});
 
 
 function App() {
@@ -44,14 +44,17 @@ function App() {
     setinitScreenDisplay('none')
     setinputDisplay('none')
     setcodeDisplay('flex')
+    setBlur(false)
   }
 
   function newCode(){
     socket.emit('newGame')
+    setBlur(false)
   }
   
   function EnterGame(){
     socket.emit('joinGame', gameCode);
+    setBlur(false)
     init()
   }
 
@@ -152,7 +155,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className='app-container'>
       <div className='new-game' style={{display: codeDisplay}}>
         <h3 className="gamecode">
             CODE: <span id="gameCodeDisplay">{gameCodeDisplay}</span>
@@ -180,8 +183,8 @@ function App() {
             <h2 className='current-score'>P2:{currentState.players[1].score}</h2>
           </div>
           <div id="game-area" style={{ display: gameAreaDisplay, filter: blur ? 'blur(4px)' : 'none' }}>
-            <Snake snakeDots={currentState.players[0].snakeDots} />
-            <Snake snakeDots={currentState.players[1].snakeDots} />
+            <Snake snakeDots={currentState.players[0].snakeDots} playerIndex={0}/>
+            <Snake snakeDots={currentState.players[1].snakeDots} playerIndex={1}/>
             <Food dot={currentState.food} />
           </div>
         </div>
