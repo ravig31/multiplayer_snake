@@ -4,15 +4,15 @@ import Snake from './Snake';
 import Food from './Food';
 import io from 'socket.io-client';
 
-// const socket = io('https://multiplayer-snake.onrender.com', {
-//   origin: 'https://multiplayer-snake.onrender.com',
-//   credentials: true
-// });
-
-const socket = io('http://localhost:3001/', {
-  origin: 'http://localhost:3001/',
+const socket = io('https://multiplayer-snake.onrender.com', {
+  origin: 'https://multiplayer-snake.onrender.com',
   credentials: true
 });
+
+// const socket = io('http://localhost:3001/', {
+//   origin: 'http://localhost:3001/',
+//   credentials: true
+// });
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
   const [gameCode, setGameCode] = useState('');
   const [gameCodeDisplay, setGameCodeDisplay] = useState('');
   const [gameOver, setGameOver] = useState(false)
-  const [blur, setBlur] = useState(false);
+  const [gameAreaBlur, setgameAreaBlur] = useState(false);
   const [incorrectCode, setIncorrectCode] = useState(false)
   const clipboard = require('./assets/clipboard-icon.png')
 
@@ -44,23 +44,22 @@ function App() {
     setinitScreenDisplay('none')
     setinputDisplay('none')
     setcodeDisplay('flex')
-    setBlur(false)
+    gameAreaBlur(false)
   }
 
   function newCode(){
     socket.emit('newGame')
-    setBlur(false)
+    gameAreaBlur(false)
   }
   
   function EnterGame(){
     socket.emit('joinGame', gameCode);
-    setBlur(false)
+    gameAreaBlur(false)
     init()
   }
 
   function JoinGame(){
     setinitScreenDisplay('none')
-    setcodeDisplay('none')
     setinputDisplay('flex')
 
   }
@@ -71,7 +70,8 @@ function App() {
     setinitScreenDisplay('none')
     setGameOver(false)
     setgameAreaDisplay('flex')
-    setBlur(false)
+    gameAreaBlur(false)
+    setinputDisplay('none')
     gameActive = true;
   }
 
@@ -148,7 +148,7 @@ function App() {
     socket.on('gameOver', data => {
       data = JSON.parse(data);
       setgameAreaDisplay('flex')
-      setBlur(true)
+      setgameAreaBlur(true)
       setGameOver(true)
 
     });
@@ -176,46 +176,44 @@ function App() {
             />
           <button className='btn' onClick={EnterGame}>ENTER</button>
         </div>
-      {currentState ? (
-        <div className='game-container'>
-          <div className='current-scores' style={{ display: gameAreaDisplay, filter: blur ? 'blur(4px)' : 'none' }}>
-            <h2 className='current-score'>P1:{currentState.players[0].score}</h2>
-            <h2 className='current-score'>P2:{currentState.players[1].score}</h2>
-          </div>
-          <div id="game-area" style={{ display: gameAreaDisplay, filter: blur ? 'blur(4px)' : 'none' }}>
-            <Snake snakeDots={currentState.players[0].snakeDots} playerIndex={0}/>
-            <Snake snakeDots={currentState.players[1].snakeDots} playerIndex={1}/>
-            <Food dot={currentState.food} />
-          </div>
-        </div>
-      ) : (
-        <div id="initial-screen" style={{display: initScreenDisplay}}>
-          <div className="title" data-splitting="lines">
-            2-PLAYER
-            SNAKE
-          </div>
-          <button className='btn' onClick={startNewGame}>New Game</button>
-          <button className='btn' onClick={JoinGame}>Join Game</button>
-        </div>
-        
-      )}
-      {gameOver ? (
-      <div className="game-over">
-        <h1 className="game-over-heading">
-          GAME <span className="over">OVER</span>
-        </h1>
         {currentState ? (
-        <div className="player-scores">
-          <h3 className="score">P1: <span className="golden">{currentState.players[0].score}</span></h3>
-          <h3 className="score">P2: <span className="golden">{currentState.players[1].score}</span></h3>
+      <div className='game-container'>
+        <div className='current-scores' style={{ display: gameAreaDisplay, filter: gameAreaBlur ? 'blur(4px)' : 'none' }}>
+          <h2 className='current-score'>P1:{currentState.players[0].score}</h2>
+          <h2 className='current-score'>P2:{currentState.players[1].score}</h2>
         </div>
-          ) : null}
-        <div className="main-menu-wrapper">
-          <button className="main-menu-btn" onClick={gameReset}>MAIN MENU</button>
+        <div id="game-area" style={{ display: gameAreaDisplay, filter: gameAreaBlur ? 'blur(4px)' : 'none' }}>
+          <Snake snakeDots={currentState.players[0].snakeDots} playerIndex={0} />
+          <Snake snakeDots={currentState.players[1].snakeDots} playerIndex={1} />
+          <Food dot={currentState.food} />
+        {gameOver ? (
+          <div className="game-over">
+            <h1 className="game-over-heading">
+              GAME <span className="over">OVER</span>
+            </h1>
+            <div className="player-scores">
+              <h3 className="score">P1: <span className="golden">{currentState.players[0].score}</span></h3>
+              <h3 className="score">P2: <span className="golden">{currentState.players[1].score}</span></h3>
+            </div>
+            <div className="main-menu-wrapper">
+              <button className="main-menu-btn" onClick={gameReset}>MAIN MENU</button>
+            </div>
+          </div>
+        ) : null}
         </div>
       </div>
-      ) : null}
-    </div>
+    ) : (
+      <div id="initial-screen" style={{ display: initScreenDisplay }}>
+        <div className="title" data-splitting="lines">
+          2-PLAYER
+          SNAKE
+        </div>
+        <h2 className='game-desc'>first player to get 20 points wins!</h2>
+        <button className='btn' onClick={startNewGame}>New Game</button>
+        <button className='btn' onClick={JoinGame}>Join Game</button>
+      </div>
+    )}
+  </div>
 );
 }
 

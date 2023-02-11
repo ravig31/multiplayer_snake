@@ -8,25 +8,25 @@ const { gameUpdate, initGame, randCoords }  = require('./game');
 const { FRAME_RATE } = require('./constants');
 const { makeid } = require('./id');
 
-// // Create HTTP server and Socket.io server
-// const server = http.createServer(app);
-// const io = new Server(server, {
-//   cors: {
-//     origin: "https://multiplayer-snake-ravig31.netlify.app",
-//     methods: ["GET", "POST"],
-//     allowedHeaders: ["Access-Control-Allow-Origin: *"],
-//     credentials: true
-//   }
-// });
-
 // Create HTTP server and Socket.io server
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "https://multiplayer-snake-ravig31.netlify.app",
     methods: ["GET", "POST"],
+    allowedHeaders: ["Access-Control-Allow-Origin: *"],
+    credentials: true
   }
 });
+
+// // Create HTTP server and Socket.io server
+// const server = http.createServer(app);
+// const io = new Server(server, {
+//   cors: {
+//     origin: "*",
+//     methods: ["GET", "POST"],
+//   }
+// });
 
 
 const globalState = {};
