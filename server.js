@@ -144,6 +144,5 @@ io.on('connection', client => {
   });
   
 server.listen(3001, () => {
-  process.env.PORT || 3000
   console.log("SERVER IS RUNNING");
 });

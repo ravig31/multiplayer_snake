@@ -4,6 +4,7 @@
 
 html{
     font-family: 'Press Start 2P', cursive;;
+    background-color: burlywood;
 }
 
 .app-container{
@@ -14,7 +15,7 @@ html{
 .btn {
     position: relative;
     font-family: 'Press Start 2P', cursive;
-    background-color:#fff;
+    background-color:burlywood;
     color: black;
     font-size: 16px;
     padding: 10px 20px;
@@ -47,7 +48,7 @@ html{
     font-family: 'ArcadeClassic', sans-serif;
     font-size: 200px;
     text-align: center;
-    background: linear-gradient(to bottom, rgb(0, 255, 8), #f02828);
+    background: linear-gradient(to bottom, rgb(61, 200, 255), rgb(218, 9, 9));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -93,10 +94,11 @@ html{
 }
 
 .snake-head {
-    background-color: rgb(255, 179, 0);
+    background-color: rgb(255, 255, 255);
     width: 2%;
     height: 2%;
     position: absolute;
+    box-shadow: 1px 1px solid black;
   }
 
 .snake-dot{
@@ -107,10 +109,10 @@ html{
     }
 
 .p0dot{
-    background-color: rgb(104, 67, 3);
+    background-color: darkred;
 }
 .p1dot{
-    background-color: darkgreen;
+    background-color: skyblue;
 }
 
 .food {
@@ -176,7 +178,7 @@ html{
 
 
 .copy-button{
-    background-color: white;
+    background-color: burlywood;
     border: white;
     margin-left: 40px;
     margin-top: 36px;

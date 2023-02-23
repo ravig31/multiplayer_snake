@@ -44,17 +44,17 @@ function App() {
     setinitScreenDisplay('none')
     setinputDisplay('none')
     setcodeDisplay('flex')
-    gameAreaBlur(false)
+    setgameAreaBlur(false)
   }
 
   function newCode(){
     socket.emit('newGame')
-    gameAreaBlur(false)
+    setgameAreaBlur(false)
   }
   
   function EnterGame(){
     socket.emit('joinGame', gameCode);
-    gameAreaBlur(false)
+    setgameAreaBlur(false)
     init()
   }
 
@@ -70,7 +70,7 @@ function App() {
     setinitScreenDisplay('none')
     setGameOver(false)
     setgameAreaDisplay('flex')
-    gameAreaBlur(false)
+    setgameAreaBlur(false)
     setinputDisplay('none')
     gameActive = true;
   }
@@ -148,7 +148,6 @@ function App() {
     socket.on('gameOver', data => {
       data = JSON.parse(data);
       setgameAreaDisplay('flex')
-      setgameAreaBlur(true)
       setGameOver(true)
 
     });
