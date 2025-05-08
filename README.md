@@ -2,6 +2,9 @@
 
 The Multiplayer Snake Game is a web-based game built using React and Socket.io. It features real-time game-play, allowing players to compete against each other over a network connection.
 
+![Game Gif]((https://ravig31.github.io/assets/snake-gif.gif))
+
+
 ## Setup
 
 To set up the project on your local machine, follow these steps:
